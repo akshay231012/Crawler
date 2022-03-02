@@ -1,0 +1,29 @@
+import requests
+import pandas as pd
+#import jason
+from datetime import date, timedelta
+
+
+keyword = input("enter keyword to search ")
+keyword1 = keyword
+site_list = ["quora.com","reditt.com","google.com"]
+for site in site_list:
+    keyword = keyword + " site:" + site
+    
+    #key file = "AIzaSyBS1gspcmUb14mI0yyxjpOMTotEC0o3HNw"
+    #google = "https://customsearch.googleapis.com/customsearch/v1?key=[YOUR_API_KEY]"
+    google_url = "https://customsearch.googleapis.com/customsearch/v1?key=AIzaSyBS1gspcmUb14mI0yyxjpOMTotEC0o3HNw&cx=45e6193e68a38b7d6"
+    google_url = google_url + "&q = " + keyword
+    print("GOOGLE URL: " + google_url)
+
+    response = requests.get(google_url)
+    #print("Response: " + str(response.text)
+    jason_res = jason.loads(response.text)
+    search_time = jason_response["searchInformation"]["searchTime"]
+    print("Search time taken is = ", search_time)
+
+    toatal_results = jason_response["searchInformation"]["totalResults"]
+    print("total results are", total_results)
+
+    keyword = keyword1 
+
