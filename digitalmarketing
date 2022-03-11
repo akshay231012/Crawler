@@ -1,8 +1,9 @@
 import requests
 import pandas as pd
-#import jason
-from datetime import date, timedelta
+import json
+from datetime import date, timedelta 
 
+questions_list = []
 
 keyword = input("enter keyword to search ")
 keyword1 = keyword
@@ -18,12 +19,26 @@ for site in site_list:
 
     response = requests.get(google_url)
     #print("Response: " + str(response.text)
-    jason_res = jason.loads(response.text)
-    search_time = jason_response["searchInformation"]["searchTime"]
-    print("Search time taken is = ", search_time)
+    json_response  = json.loads(response.text)
+    #search_time = jason_response["searchInformation"]["searchTime"]
+    #print("Search time taken is = ", search_time)
 
-    toatal_results = jason_response["searchInformation"]["totalResults"]
-    print("total results are", total_results)
+    total_results = int(json_response["searchInformation"]["totalResults"])
+    #print("total results are", total_results)
 
-    keyword = keyword1 
+    next_index = json_response["queries"]["nextPage"][0]["startIndex"]
+
+    total_pages = round(total_results / 10)
+
+    try:
+      while next_index < total_pages:
+        for item in json_response["items"]:
+          title = item["title"]
+          questions_list.append(title)
+
+    except Exception as e:
+      print("Exception",e) 
+
+    keyword = keyword1
+questions_list    
 
