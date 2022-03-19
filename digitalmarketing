@@ -26,19 +26,25 @@ for site in site_list:
     total_results = int(json_response["searchInformation"]["totalResults"])
     #print("total results are", total_results)
 
-    next_index = json_response["queries"]["nextPage"][0]["startIndex"]
+    #next_index = json_response["queries"]["nextPage"][0]["startIndex"]
 
     total_pages = round(total_results / 10)
 
     try:
-      while next_index < total_pages:
-        for item in json_response["items"]:
-          title = item["title"]
-          questions_list.append(title)
+      #while next_index < total_pages:
+      for item in json_response["items"]:
+        title = item["title"]
+        questions_list.append(title)
+        print(title)
+
+        
 
     except Exception as e:
-      print("Exception",e) 
+      pass
+      #print("Exception",e) 
 
     keyword = keyword1
-questions_list    
-
+#questions_list
+questions_dict = {"Questions" : questions_list}
+df = pd.DataFrame(data=questions_dict) 
+df   
